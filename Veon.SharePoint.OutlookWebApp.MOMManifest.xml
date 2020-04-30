@@ -15,7 +15,7 @@
   <!-- Отображаемое имя надстройки. Используется в Магазине и различных местах пользовательского интерфейса Office, например в диалоговом окне надстройки. -->
   <DisplayName DefaultValue="MOM" />
   <Description DefaultValue="Постановка задач по результатам встречи" />
-  <IconUrl DefaultValue="https://alexkor.github.io/MOM/Images/icon64.png" />
+  <IconUrl DefaultValue="https://alexkor.github.io/MOM/Images/checklist-on-clipboard64.png" />
 
   <SupportUrl DefaultValue="https://alexkor.github." />
   <!-- Домены, которые будут разрешены при навигации. Например, если использовать ShowTaskpane, а затем указать ссылку "href", навигация будет разрешена только для домена, находящегося в списке. -->
@@ -94,9 +94,9 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://alexkor.github.io/MOM/Images/icon16.png" />
-        <bt:Image id="icon32" DefaultValue="https://alexkor.github.io/MOM/Images/icon32.png" />
-        <bt:Image id="icon80" DefaultValue="https://alexkor.github.io/MOM/Images/icon80.png" />
+        <bt:Image id="icon16" DefaultValue="https://alexkor.github.io/MOM/Images/checklist-on-clipboard16.png" />
+        <bt:Image id="icon32" DefaultValue="https://alexkor.github.io/MOM/Images/checklist-on-clipboard32.png" />
+        <bt:Image id="icon80" DefaultValue="https://alexkor.github.io/MOM/Images/checklist-on-clipboard80.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="functionFile" DefaultValue="https://alexkor.github.io/MOM/Functions/FunctionFile.html" />
