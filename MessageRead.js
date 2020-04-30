@@ -90,9 +90,7 @@
                 type: 'POST',
                 xhrFields: { withCredentials: true },
                 contentType: "application/x-www-form-urlencoded;",
-                data: 'pageId=53811457 \
-                        &f=meetingCollector \
-                        &title01='+ item.subject +
+                data: 'pageId=53811457&f=meetingCollector&title01=' + item.subject +
                     '&beginTm=' + item.start.format('dd.MM.yyyy HH:mm') +
                     '&endTm=' + item.end.format('dd.MM.yyyy HH:mm') +
                     '&obligMember=' + item.requiredAttendees.map(function (address) { return address.emailAddress; }) +
