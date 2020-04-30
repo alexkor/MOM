@@ -15,6 +15,7 @@
 
     <script src="MessageRead.js" type="text/javascript"></script>
     <script src="Scripts/MessageBanner.js" type="text/javascript"></script>
+    <link href="MessageRead.css" rel="stylesheet" type="text/css" />
     <link href="Content/Button.css" rel="stylesheet" type="text/css" />
     <link href="Content/MessageBanner.css" rel="stylesheet" type="text/css" />
 
@@ -30,46 +31,47 @@
 </head>
 <body class="ms-Fabric" dir="ltr">
 
-    <div id="content-header">
+    <!--<div id="content-header">
         <div class="padding">
             <p class="ms-font-xl ms-fontColor-themeDarkAlt ms-fontWeight-semilight">All properties</p>
         </div>
-    </div>
+    </div>-->
     <div id="content-main" class="ms-Grid" dir="ltr">
         <!--<iframe src="https://office.beeline.kz/sites/system/Lists/TMP/NewForm.aspx?isdlg=1&title=123" width="100%" height="450px" ></iframe>-->
         <div id="message-props" class="ms-Grid-row hidden">
             <div class="ms-Grid-col ms-sm12 ms-md12 ms-lg12">
                 <div class="ms-Grid" dir="ltr">
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Организатор</span>
-                        <span id="organizer" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Тема</span>
-                        <span id="normalizedSubject" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Место встречи</span>
-                        <span id="location" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Дата начала</span>
-                        <span id="start" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Обязательные участники</span>
-                        <span id="requiredAttendees" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Не обязательные участники</span>
-                        <span id="optionalAttendees" class="ms-Grid-col ms-sm7"></span>
-                    </div>
-                    <div class="ms-Grid-row">
-                        <span class="ms-Grid-col ms-fontWeight-semibold ms-sm5">Описание</span>
-                        <span id="body" class="ms-Grid-col ms-sm7"></span>
-                    </div>
                     <div class="ms-Grid-row form">
-                        <button id="submit" class="ms-Grid-col ms-sm7">Сохранить</button>
+                        <button id="submit" class="ms-sm12">Создать</button>
+                    </div>
+                    <!--<div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Организатор</div>
+                        <textarea disabled id="organizer" class="ms-fontWeight-semibold ms-sm12"></textarea>
+                    </div>-->
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Тема</div>
+                        <textarea disabled id="normalizedSubject" class="ms-fontWeight-semibold ms-sm12"></textarea>
+                    </div>
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Место встречи</div>
+                        <textarea disabled id="location" class="ms-fontWeight-semibold ms-sm12"></textarea>
+                    </div>
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Дата начала</div>
+                        <!--<textarea disabled id="start" class="ms-fontWeight-semibold ms-sm12"></textarea>-->
+                        <input disabled id="start" type="date" />
+                    </div>
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Обязательные участники</div>
+                        <div disabled contenteditable="true" id="requiredAttendees" class="ms-fontWeight-semibold ms-sm12"></div>
+                    </div>
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Не обязательные участники</div>
+                        <div disabled contenteditable="true" id="optionalAttendees" class="ms-fontWeight-semibold ms-sm12"></div>
+                    </div>
+                    <div class="ms-Grid-row">
+                        <div class="ms-fontWeight-semibold ms-sm12">Описание</div>
+                        <textarea disabled id="body" class="ms-fontWeight-semibold ms-sm12" style="min-height:300px;"></textarea>
                     </div>
                 </div>
             </div>

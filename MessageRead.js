@@ -34,7 +34,7 @@
     // Форматировать объект EmailAddressDetails как
     // Имя Фамилия <emailaddress>
     function buildEmailAddressString(address) {
-        return address.displayName + " &lt;" + address.emailAddress + "&gt;";
+        return "<a href='" + address.emailAddress + "'>" + address.displayName + "</a>";
     }
 
     // Взять массив объектов AttachmentDetails и
@@ -45,7 +45,7 @@
 
             for (var i = 0; i < addresses.length; i++) {
                 if (i > 0) {
-                    returnString = returnString + "<br/>";
+                    returnString = returnString + "<br />";
                 }
                 returnString = returnString + buildEmailAddressString(addresses[i]);
             }
@@ -76,11 +76,13 @@
         $('#location').html(item.location);
         $('#normalizedSubject').text(item.normalizedSubject);
         $('#notificationMessages').text(item.notificationMessages);
+
         $('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
-        $('#organizer').text(buildEmailAddressesString(item.organizer));
         $('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
 
-        $('#start').html(item.start);
+        $('#organizer').text(buildEmailAddressesString(item.organizer));
+
+        $('#start').val(item.start.format('yyyy-MM-dd'));
         $('#subject').html(item.subject);
 
         $('#submit').click(function () {
