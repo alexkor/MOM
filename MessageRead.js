@@ -105,7 +105,8 @@
                 button.prop('disabled', false);
                 showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
             }).done(function () {
-                showNotification('МОМ встречи создан', '<a target="_blank" href="https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347">confluence</a>');
+                //showNotification('МОМ встречи создан', '<a target="_blank" href="https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347">confluence</a>');
+                window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347', '_blank');
             });
 
             //Office.context.ui.displayDialogAsync('https://office.beeline.kz/sites/system/Lists/TMP/NewForm.aspx?Title=' + item.subject);
