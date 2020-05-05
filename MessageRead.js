@@ -101,7 +101,7 @@
                     '&place=' + item.location +
                     '&agenda=' + body +
                     '&type=OutlookConfluence'
-            }).fail(function (, state, message) {
+            }).fail(function (ctx, state, message) {
                 button.prop('disabled', false);
                 showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
             }).done(function () {
