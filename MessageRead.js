@@ -85,8 +85,9 @@
         $('#start').val(item.start.format('yyyy-MM-dd'));
         $('#subject').html(item.subject);
 
-        $('#submit').click(function () {
-
+        $('#submit').click(function (ev) {
+            var button = $(this);
+            button.prop('disabled', true);
             $.ajax({
                 url: 'https://confluence.beeline.kz/ajax/confiforms/rest/save.action',
                 type: 'POST',
@@ -100,6 +101,11 @@
                     '&place=' + item.location +
                     '&agenda=' + body +
                     '&type=OutlookConfluence'
+            }).fail(function (, state, message) {
+                button.prop('disabled', false);
+                showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+            }).done(function () {
+                showNotification('МОМ встречи создан', '<a target="_blank" href="https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347">confluence</a>');
             });
 
             //Office.context.ui.displayDialogAsync('https://office.beeline.kz/sites/system/Lists/TMP/NewForm.aspx?Title=' + item.subject);
@@ -190,7 +196,7 @@
     // Вспомогательная функция для отображения уведомлений
     function showNotification(header, content) {
         $("#notificationHeader").text(header);
-        $("#notificationBody").text(content);
+        $("#notificationBody").html(content);
         messageBanner.showBanner();
         messageBanner.toggleExpansion();
     }

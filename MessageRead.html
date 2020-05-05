@@ -26,7 +26,7 @@
     <!-- Чтобы включить автономное использование Office UI Fabric Core, используйте следующее: -->
     <!-- link rel="stylesheet" href="Content/fabric.min.css" -->
     <!-- Office UI Fabric JS и его компоненты более не поддерживаются. Рекомендуемые шаблоны и методики см. по адресу https://aka.ms/PnP-OfficeFabricReact -->
-    <!-- <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css" /> -->
+     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css" /> 
 
 </head>
 <body class="ms-Fabric" dir="ltr">
@@ -37,12 +37,13 @@
         </div>
     </div>-->
     <div id="content-main" class="ms-Grid" dir="ltr">
-        <!--<iframe src="https://office.beeline.kz/sites/system/Lists/TMP/NewForm.aspx?isdlg=1&title=123" width="100%" height="450px" ></iframe>-->
         <div id="message-props" class="ms-Grid-row hidden">
             <div class="ms-Grid-col ms-sm12 ms-md12 ms-lg12">
                 <div class="ms-Grid" dir="ltr">
                     <div class="ms-Grid-row form">
-                        <button id="submit" class="ms-sm12">Создать</button>
+                        <button id="submit" class="ms-Button ms-Button--primary ms-sm12">
+                            <span class="ms-Button-label">Создать MOM</span>
+                        </button>
                     </div>
                     <!--<div class="ms-Grid-row">
                         <div class="ms-fontWeight-semibold ms-sm12">Организатор</div>
@@ -79,7 +80,7 @@
     </div>
 
     <!-- Компонент, используемый для отображения уведомлений -->
-    <div class="MessageBanner" style="position:absolute;bottom: 0;">
+    <div class="MessageBanner" style="position:absolute;top: 0;">
         <div class="MessageBanner-content">
             <div class="MessageBanner-text">
                 <div class="MessageBanner-clipper">
