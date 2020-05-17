@@ -59,14 +59,53 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
-        var item = Office.context.mailbox.item;
+        var mailItem = Office.context.mailbox.item;
+        window.item = {};
+        if (!mailItem.itemClass) {
+            Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
+                item.organizer = asyncResult.value;
+            });
+            Office.context.mailbox.item.start.getAsync(function (asyncResult) {
+                item.start = asyncResult.value;
+            });
+            Office.context.mailbox.item.end.getAsync(function (asyncResult) {
+                item.end = asyncResult.value;
+            });
+            Office.context.mailbox.item.location.getAsync(function (asyncResult) {
+                item.location = asyncResult.value;
+            });
+            Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+                item.subject = asyncResult.value;
+            });
+            Office.context.mailbox.item.requiredAttendees.getAsync(function (asyncResult) {
+                item.requiredAttendees = asyncResult.value;
+            });
+            Office.context.mailbox.item.optionalAttendees.getAsync(function (asyncResult) {
+                item.optionalAttendees = asyncResult.value;
+            });
+            item.body = mailItem.body;
+        }
+        else {
+            item = mailItem;
+            $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
+            $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
+            $('#itemClass').text(item.itemClass);
+            $('#itemId').text(item.itemId);
+            $('#itemType').text(item.itemType);
+        }
+        waitUntilDataRetrive();
+    }
 
-        $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
-        $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
-        $('#itemClass').text(item.itemClass);
-        $('#itemId').text(item.itemId);
-        $('#itemType').text(item.itemType);
+    function waitUntilDataRetrive() {
+        if (!item.end) {
+            setTimeout(waitUntilDataRetrive, 200);
+        }
+        else {
+            fillData();
+        }
+    }
 
+    function fillData() {
         $('#message-props').show();
 
         //$('#attachments').html(buildAttachmentsString(item.attachments));
@@ -74,16 +113,16 @@
         item.body.getAsync("text", { asyncContext: "callback" }, function (result) { body = result.value; $('#body').html(body) });
         $('#end').text(item.end);
         $('#location').html(item.location);
-        $('#normalizedSubject').text(item.normalizedSubject);
-        $('#notificationMessages').text(item.notificationMessages);
+        $('#normalizedSubject').text(item.subject);
+        //$('#notificationMessages').text(item.notificationMessages);
 
         $('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
         $('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
 
-        $('#organizer').text(buildEmailAddressesString(item.organizer));
+        //$('#organizer').text(buildEmailAddressesString(item.organizer));
 
         $('#start').val(item.start.format('yyyy-MM-dd'));
-        $('#subject').html(item.subject);
+        //$('#subject').html(item.subject);
 
         $('#submit').click(function (ev) {
             var button = $(this);
