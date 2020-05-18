@@ -153,7 +153,7 @@
                     contentType: "application/x-www-form-urlencoded;",
                     data: 'pageId=53811457&f=meetingCollector&q=id:' + rId,
                     success: function (jsonData) {
-                        pId = jsonData.list.entry[0].fields.meetingLink;
+                        var pId = jsonData.list.entry[0].fields.meetingLink;
                         window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=' + pId, '_blank');
                     }
                 })
