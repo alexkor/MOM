@@ -97,7 +97,7 @@
     }
 
     function waitUntilDataRetrive() {
-        if (!item.end) {
+        if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
