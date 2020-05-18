@@ -143,9 +143,23 @@
             }).fail(function (ctx, state, message) {
                 button.prop('disabled', false);
                 showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
-            }).done(function () {
+            }).done(function (data) {
+                var jsonData = JSON.parse(data);
+                var rId = jsonData.id;                                                                                                       
+                $.ajax({
+                    url: 'https://confluence.beeline.kz/ajax/confiforms/rest/filter.action',
+                    type: 'GET',
+                    xhrFields: { withCredentials: true },
+                    contentType: "application/x-www-form-urlencoded;",
+                    data: 'pageId=53811457&f=meetingCollector&q=id:' + rId,
+                    success: function (jsonData) {
+                        pId = jsonData.list.entry[0].fields.meetingLink;
+                        window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=' + pId, '_blank');
+                    }
+                })
+
                 //showNotification('МОМ встречи создан', '<a target="_blank" href="https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347">confluence</a>');
-                window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=53812347', '_blank');
+                
             });
 
             //Office.context.ui.displayDialogAsync('https://office.beeline.kz/sites/system/Lists/TMP/NewForm.aspx?Title=' + item.subject);
