@@ -6,12 +6,6 @@
     // Функцию инициализации Office необходимо выполнять при каждой загрузке новой страницы.
     Office.initialize = function (reason) {
         $(document).ready(function () {
-            var url = new URL('./Authorization.html', window.location.href).href;
-            var dialogOptions = { width: 20, height: 40, displayInIframe: true };
-            Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
-                console.log(result);
-            });
-
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
             messageBanner.hideBanner();
@@ -152,8 +146,14 @@
                         jsonData = JSON.parse(data);
                     }
                     catch (ex) {
+                        var isValid =
+                            showNotification("Необходима авторизация в confluence, подтвердить переход?",
+                                "<button onclick='auth()'>OK</button><button onclick='hideNotification()'>CANCEL</button>"
+                            );
+
                         button.prop('disabled', false);
-                        showNotification('Ошибка создания МОМ встречи', 'err: ' + ex.message);
+                        //showNotification('Ошибка создания МОМ встречи', 'err: ' + ex.message);
+                        return;
                     }
 
                     var rId = jsonData.id;
@@ -188,4 +188,21 @@
         messageBanner.showBanner();
         messageBanner.toggleExpansion();
     }
+
+    window.auth = function () {
+        var url = new URL('./Redirect.html', window.location.href).href;
+        var dialogOptions = { width: 20, height: 40, displayInIframe: false, promptBeforeOpen: false };
+        Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
+            console.log(result);
+            setTimeout(function () {
+                messageBanner.hideBanner();
+                result.value.close();
+            }, 5000);
+        });
+    }
+
+    window.hideNotification = function () {
+        messageBanner.hideBanner();
+    }
+
 })();
