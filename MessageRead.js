@@ -146,13 +146,11 @@
                         jsonData = JSON.parse(data);
                     }
                     catch (ex) {
-                        var isValid =
-                            showNotification("Необходима авторизация в confluence, подтвердить переход?",
-                                "<button onclick='auth()'>OK</button><button onclick='hideNotification()'>CANCEL</button>"
-                            );
+                        showNotification("Необходима авторизация в confluence, подтвердить переход?",
+                            '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
+                            '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Отмена</span></button>');
 
                         button.prop('disabled', false);
-                        //showNotification('Ошибка создания МОМ встречи', 'err: ' + ex.message);
                         return;
                     }
 
