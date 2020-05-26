@@ -5,8 +5,13 @@
 
     // Функцию инициализации Office необходимо выполнять при каждой загрузке новой страницы.
     Office.initialize = function (reason) {
-        $.get('https://confluence.beeline.kz/');
         $(document).ready(function () {
+            var url = new URI('Authorization.html').absoluteTo(window.location).toString();
+            var dialogOptions = { width: 20, height: 40, displayInIframe: true };
+            Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
+                console.log(result);
+            });
+
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
             messageBanner.hideBanner();
