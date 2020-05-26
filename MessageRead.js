@@ -6,7 +6,7 @@
     // Функцию инициализации Office необходимо выполнять при каждой загрузке новой страницы.
     Office.initialize = function (reason) {
         $(document).ready(function () {
-            var url = new URI('Authorization.html').absoluteTo(window.location).toString();
+            var url = new URL('./Authorization.html', window.location.href).href;
             var dialogOptions = { width: 20, height: 40, displayInIframe: true };
             Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
                 console.log(result);
