@@ -127,74 +127,55 @@
         $('#submit').click(function (ev) {
             var button = $(this);
             button.prop('disabled', true);
-            fetch('https://confluence.beeline.kz/ajax/confiforms/rest/save.action', {
-                method: "POST",
-                credentials: 'include',
-                referrerPolicy: "unsafe-url",
-                body: `?pageId=53811457
-                    &f=meetingCollector
-                    &title01=Test Version for API connecting
-                    &beginTm=16.04.2020 10:00
-                    &endTm=16.04.2020 10:30
-                    &obligMember=NBukhasheva@beeline.kz
-                    &optionalMember=gstarygina_test@localhost
-                    &place=Skype online meeting
-                    &agenda=Test version for API connecting. API address, creating example and results you can find below in attachments.
-                    &type=OutlookConfluence`,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+            $.ajax({
+                url: 'https://confluence.beeline.kz/ajax/confiforms/rest/save.action',
+                type: 'POST',
+                xhrFields: { withCredentials: true },
+                contentType: "application/x-www-form-urlencoded;",
+                data: 'pageId=53811457&f=meetingCollector&title01=' + item.subject +
+                    '&beginTm=' + item.start.format('dd.MM.yyyy HH:mm') +
+                    '&endTm=' + item.end.format('dd.MM.yyyy HH:mm') +
+                    '&obligMember=' + item.requiredAttendees.map(function (address) { return address.emailAddress; }) +
+                    '&optionalMember=' + item.optionalAttendees.map(function (address) { return address.emailAddress; }) +
+                    '&place=' + item.location +
+                    '&agenda=' + body +
+                    '&type=OutlookConfluence',
+                success: function (data) {
+                    var jsonData;
+                    try {
+                        jsonData = JSON.parse(data);
+                    }
+                    catch (ex) {
+                        showNotification("Необходима авторизация в confluence, подтвердить переход?",
+                            '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
+                            '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
+
+                        button.prop('disabled', false);
+                        return;
+                    }
+
+                    var rId = jsonData.id;
+                    $.ajax({
+                        url: 'https://confluence.beeline.kz/ajax/confiforms/rest/filter.action',
+                        type: 'GET',
+                        xhrFields: { withCredentials: true },
+                        contentType: "application/x-www-form-urlencoded;",
+                        data: 'pageId=53811457&f=meetingCollector&q=id:' + rId,
+                        success: function (jsonData) {
+                            var pId = jsonData.list.entry[0].fields.meetingLink;
+                            window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=' + pId, '_blank');
+                        },
+                        error: function (ctx, state, message) {
+                            button.prop('disabled', false);
+                            showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                        }
+                    });
                 },
-                redirect: 'follow',
-            }).then(console.log);
-            //$.ajax({
-            //    url: 'https://confluence.beeline.kz/ajax/confiforms/rest/save.action',
-            //    type: 'POST',
-            //    xhrFields: { withCredentials: true },
-            //    contentType: "application/x-www-form-urlencoded;",
-            //    data: 'pageId=53811457&f=meetingCollector&title01=' + item.subject +
-            //        '&beginTm=' + item.start.format('dd.MM.yyyy HH:mm') +
-            //        '&endTm=' + item.end.format('dd.MM.yyyy HH:mm') +
-            //        '&obligMember=' + item.requiredAttendees.map(function (address) { return address.emailAddress; }) +
-            //        '&optionalMember=' + item.optionalAttendees.map(function (address) { return address.emailAddress; }) +
-            //        '&place=' + item.location +
-            //        '&agenda=' + body +
-            //        '&type=OutlookConfluence',
-            //    success: function (data) {
-            //        var jsonData;
-            //        try {
-            //            jsonData = JSON.parse(data);
-            //        }
-            //        catch (ex) {
-            //            showNotification("Необходима авторизация в confluence, подтвердить переход?",
-            //                '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
-            //                '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
-
-            //            button.prop('disabled', false);
-            //            return;
-            //        }
-
-            //        var rId = jsonData.id;
-            //        $.ajax({
-            //            url: 'https://confluence.beeline.kz/ajax/confiforms/rest/filter.action',
-            //            type: 'GET',
-            //            xhrFields: { withCredentials: true },
-            //            contentType: "application/x-www-form-urlencoded;",
-            //            data: 'pageId=53811457&f=meetingCollector&q=id:' + rId,
-            //            success: function (jsonData) {
-            //                var pId = jsonData.list.entry[0].fields.meetingLink;
-            //                window.open('https://confluence.beeline.kz/pages/viewpage.action?pageId=' + pId, '_blank');
-            //            },
-            //            error: function (ctx, state, message) {
-            //                button.prop('disabled', false);
-            //                showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
-            //            }
-            //        });
-            //    },
-            //    error: function (ctx, state, message) {
-            //        button.prop('disabled', false);
-            //        showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
-            //    }
-            //});
+                error: function (ctx, state, message) {
+                    button.prop('disabled', false);
+                    showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                }
+            });
         });
     }
 
