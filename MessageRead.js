@@ -139,7 +139,8 @@
                     '&optionalMember=' + item.optionalAttendees.map(function (address) { return address.emailAddress; }) +
                     '&place=' + item.location +
                     '&agenda=' + body +
-                    '&type=OutlookConfluence',
+                    '&type=OutlookConfluence' +
+                    '&authorMeeting=' + item.organizer.emailAddress,
                 success: function (data) {
                     var jsonData;
                     try {
