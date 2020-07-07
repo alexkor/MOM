@@ -158,7 +158,7 @@
                     $.ajax({
                         url: 'https://confluence.beeline.kz/ajax/confiforms/rest/filter.action',
                         type: 'GET',
-                        xhrFields: { withCredentials: true },
+                        headers: { "Authorization": "Basic " + btoa("tech_outlook_mom:~F4B?#?Z") },
                         contentType: "application/x-www-form-urlencoded;",
                         data: 'pageId=53811457&f=meetingCollector&q=id:' + rId,
                         success: function (jsonData) {
