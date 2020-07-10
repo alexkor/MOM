@@ -102,7 +102,7 @@
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
-            showNotification('logs:' + JSON.stringify(item));
+            showNotification('logs:' + item.organizer.emailAddress);
             // fillData();
         }
     }
