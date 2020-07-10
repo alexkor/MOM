@@ -9,6 +9,7 @@
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
             // messageBanner.hideBanner();
+            console.log('document ready');
             loadProps();
         });
     };
@@ -59,10 +60,12 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
+        console.log('load props');
         var mailItem = Office.context.mailbox.item;
         
         window.item = {};
         if (!mailItem.itemClass) {
+            console.log('edit meeting');
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
                 item.organizer = asyncResult.value;
             });
@@ -87,6 +90,7 @@
             item.body = mailItem.body;
         }
         else {
+            console.log('read meeting');
             item = mailItem;
             $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
             $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
@@ -94,15 +98,17 @@
             $('#itemId').text(item.itemId);
             $('#itemType').text(item.itemType);
         }
-        // waitUntilDataRetrive();
+        waitUntilDataRetrive();
     }
 
     function waitUntilDataRetrive() {
+        console.log('wait until data retrive');
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
-            console.log('logs:' + item.organizer.emailAddress);
+            console.log('data ready');
+            console.log(item.organizer.emailAddress);
             // fillData();
         }
     }
