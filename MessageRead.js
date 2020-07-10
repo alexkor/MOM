@@ -8,7 +8,7 @@
         $(document).ready(function () {
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
-            messageBanner.hideBanner();
+            // messageBanner.hideBanner();
             loadProps();
         });
     };
@@ -60,7 +60,7 @@
     // свойства конкретного сообщения.
     function loadProps() {
         var mailItem = Office.context.mailbox.item;
-        showNotification('logs:' + mailItem,);
+        showNotification('logs:' + JSON.stringify(mailItem));
         window.item = {};
         if (!mailItem.itemClass) {
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
@@ -94,7 +94,7 @@
             $('#itemId').text(item.itemId);
             $('#itemType').text(item.itemType);
         }
-        waitUntilDataRetrive();
+        // waitUntilDataRetrive();
     }
 
     function waitUntilDataRetrive() {
