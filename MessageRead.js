@@ -60,7 +60,7 @@
     // свойства конкретного сообщения.
     function loadProps() {
         var mailItem = Office.context.mailbox.item;
-        showNotification('logs:' + JSON.stringify(mailItem));
+        
         window.item = {};
         if (!mailItem.itemClass) {
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
@@ -102,7 +102,8 @@
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
-            fillData();
+            showNotification('logs:' + JSON.stringify(item));
+            // fillData();
         }
     }
 
