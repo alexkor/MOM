@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     "use strict";
 
     var messageBanner;
@@ -8,8 +8,7 @@
         $(document).ready(function () {
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
-            // messageBanner.hideBanner();
-            console.log('document ready');
+            messageBanner.hideBanner();
             loadProps();
         });
     };
@@ -60,12 +59,9 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
-        console.log('load props');
         var mailItem = Office.context.mailbox.item;
-        
         window.item = {};
         if (!mailItem.itemClass) {
-            console.log('edit meeting');
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
                 item.organizer = asyncResult.value;
             });
@@ -87,10 +83,13 @@
             Office.context.mailbox.item.optionalAttendees.getAsync(function (asyncResult) {
                 item.optionalAttendees = asyncResult.value;
             });
-            item.body = mailItem.body;
+            item.body.getAsync("text", { asyncContext: "callback" }, function (result) {
+                item.body = result.value;
+
+            });
+            //item.body = mailItem.body;
         }
         else {
-            console.log('read meeting');
             item = mailItem;
             $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
             $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
@@ -102,53 +101,43 @@
     }
 
     function waitUntilDataRetrive() {
-        console.log('wait until data retrive');
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
-            console.log('data ready');
-            console.log(item.organizer.emailAddress);
-            // fillData();
+            fillData();
         }
     }
 
     function fillData() {
         $('#message-props').show();
 
-        //$('#attachments').html(buildAttachmentsString(item.attachments));
-        var body = '';
-        item.body.getAsync("text", { asyncContext: "callback" }, function (result) { body = result.value; $('#body').html(body) });
         $('#end').text(item.end);
         $('#location').html(item.location);
         $('#normalizedSubject').text(item.subject);
-        //$('#notificationMessages').text(item.notificationMessages);
-
         $('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
         $('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
-
-        //$('#organizer').text(buildEmailAddressesString(item.organizer));
-
         $('#start').val(item.start.format('yyyy-MM-dd'));
-        //$('#subject').html(item.subject);
+        $('#body').html(item.body);
 
         $('#submit').click(function (ev) {
             var button = $(this);
             button.prop('disabled', true);
+            var message = 'pageId=53811457&f=meetingCollector&title01=' + item.subject +
+                '&beginTm=' + item.start.format('dd.MM.yyyy HH:mm') +
+                '&endTm=' + item.end.format('dd.MM.yyyy HH:mm') +
+                '&obligMember=' + item.requiredAttendees.map(function (address) { return address.emailAddress; }) +
+                '&optionalMember=' + item.optionalAttendees.map(function (address) { return address.emailAddress; }) +
+                '&place=' + item.location +
+                '&agenda=' + item.body +
+                '&type=OutlookConfluence' +
+                '&authorMeeting=' + item.organizer.emailAddress;
             $.ajax({
                 url: 'https://confluence.beeline.kz/ajax/confiforms/rest/save.action',
                 type: 'POST',
                 headers: { "Authorization": "Basic " + btoa("tech_outlook_mom:~F4B?#?Z") },
                 contentType: "application/x-www-form-urlencoded;",
-                data: 'pageId=53811457&f=meetingCollector&title01=' + item.subject +
-                    '&beginTm=' + item.start.format('dd.MM.yyyy HH:mm') +
-                    '&endTm=' + item.end.format('dd.MM.yyyy HH:mm') +
-                    '&obligMember=' + item.requiredAttendees.map(function (address) { return address.emailAddress; }) +
-                    '&optionalMember=' + item.optionalAttendees.map(function (address) { return address.emailAddress; }) +
-                    '&place=' + item.location +
-                    '&agenda=' + body +
-                    '&type=OutlookConfluence' +
-                    '&authorMeeting=' + item.organizer.emailAddress,
+                data: message,
                 success: function (data) {
                     var jsonData;
                     try {
