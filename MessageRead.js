@@ -112,13 +112,13 @@
     function fillData() {
         $('#message-props').show();
 
-        $('#end').text(item.end);
+        //$('#start').val(item.start.format('yyyy-MM-dd'));
+        //$('#end').text(item.end);
         $('#location').html(item.location);
         $('#normalizedSubject').text(item.subject);
-        $('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
-        $('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
-        $('#start').val(item.start.format('yyyy-MM-dd'));
-        $('#body').html(item.body);
+        //$('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
+        //$('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
+        //$('#body').html(item.body);
 
         $('#submit').click(function (ev) {
             var button = $(this);
