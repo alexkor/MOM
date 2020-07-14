@@ -8,7 +8,7 @@
         $(document).ready(function () {
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
-            messageBanner.hideBanner();
+            // messageBanner.hideBanner();
             loadProps();
         });
     };
@@ -193,7 +193,6 @@
         var url = new URL('./Redirect.html', window.location.href).href;
         var dialogOptions = { width: 20, height: 40, displayInIframe: false, promptBeforeOpen: false };
         Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
-            console.log(result);
             setTimeout(function () {
                 messageBanner.hideBanner();
                 result.value.close();
