@@ -59,7 +59,7 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
-        document.getElementById("logger").innerText = "start loadProps";
+        document.getElementById("logger").innerHTML  = "start loadProps";
         var mailItem = Office.context.mailbox.item;
         window.item = {};
         if (!mailItem.itemClass) {
@@ -99,11 +99,11 @@
             $('#itemType').text(item.itemType);
         }
         waitUntilDataRetrive();
-        document.getElementById("logger").innerText = "end loadProps";
+        document.getElementById("logger").innerHTML  = "end loadProps";
     }
 
     function waitUntilDataRetrive() {
-        document.getElementById("logger").innerText = "start wait";
+        document.getElementById("logger").innerHTML  = "start wait";
 
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
@@ -112,11 +112,11 @@
             fillData();
         }
 
-        document.getElementById("logger").innerText = "end wait";
+        document.getElementById("logger").innerHTML  = "end wait";
     }
 
     function fillData() {
-        document.getElementById("logger").innerText = "start filldata";
+        document.getElementById("logger").innerHTML  = "start filldata";
 
         $('#message-props').show();
 
@@ -184,7 +184,7 @@
             });
         });
 
-        document.getElementById("logger").innerText = "end filldata";
+        document.getElementById("logger").innerHTML  = "end filldata";
     }
 
     // Вспомогательная функция для отображения уведомлений
