@@ -59,6 +59,7 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
+        showNotification('load data start');
         var mailItem = Office.context.mailbox.item;
         window.item = {};
         if (!mailItem.itemClass) {
@@ -98,6 +99,7 @@
             $('#itemType').text(item.itemType);
         }
         waitUntilDataRetrive();
+        showNotification('load data end');
     }
 
     function waitUntilDataRetrive() {
