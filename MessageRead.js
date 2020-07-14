@@ -103,6 +103,7 @@
     }
 
     function waitUntilDataRetrive() {
+        showNotification('wait start');
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
@@ -147,9 +148,9 @@
                         jsonData = JSON.parse(data);
                     }
                     catch (ex) {
-                        showNotification("Необходима авторизация в confluence, подтвердить переход?",
-                            '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
-                            '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
+                        // showNotification("Необходима авторизация в confluence, подтвердить переход?",
+                        //     '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
+                        //     '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
 
                         button.prop('disabled', false);
                         return;
@@ -168,13 +169,13 @@
                         },
                         error: function (ctx, state, message) {
                             button.prop('disabled', false);
-                            showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                            // showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
                         }
                     });
                 },
                 error: function (ctx, state, message) {
                     button.prop('disabled', false);
-                    showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                    // showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
                 }
             });
         });
