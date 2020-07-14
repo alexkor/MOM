@@ -59,8 +59,8 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
-        showNotification('load data start');
         var mailItem = Office.context.mailbox.item;
+        showNotification('Office.context.mailbox.item');
         window.item = {};
         if (!mailItem.itemClass) {
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
