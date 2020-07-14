@@ -8,7 +8,7 @@
         $(document).ready(function () {
             var element = document.querySelector('.MessageBanner');
             messageBanner = new components.MessageBanner(element);
-            // messageBanner.hideBanner();
+            messageBanner.hideBanner();
             loadProps();
         });
     };
@@ -59,10 +59,10 @@
     // Загрузите свойства из базового объекта Item, затем загрузите
     // свойства конкретного сообщения.
     function loadProps() {
+        document.getElementById("logger").innerText = "start loadProps";
         var mailItem = Office.context.mailbox.item;
         window.item = {};
         if (!mailItem.itemClass) {
-            showNotification('load data if');
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
                 item.organizer = asyncResult.value;
             });
@@ -88,10 +88,9 @@
                 item.body = result.value;
 
             });
-            //item.body = mailItem.body;
+            item.body = mailItem.body;
         }
         else {
-            showNotification('load data else');
             item = mailItem;
             $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
             $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
@@ -100,29 +99,34 @@
             $('#itemType').text(item.itemType);
         }
         waitUntilDataRetrive();
+        document.getElementById("logger").innerText = "end loadProps";
     }
 
     function waitUntilDataRetrive() {
-        showNotification('wait start');
+        document.getElementById("logger").innerText = "start wait";
+
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
-            showNotification('wait end');
             fillData();
         }
+
+        document.getElementById("logger").innerText = "end wait";
     }
 
     function fillData() {
+        document.getElementById("logger").innerText = "start filldata";
+
         $('#message-props').show();
 
-        //$('#start').val(item.start.format('yyyy-MM-dd'));
-        //$('#end').text(item.end);
+        $('#start').val(item.start.format('yyyy-MM-dd'));
+        $('#end').text(item.end);
         $('#location').html(item.location);
         $('#normalizedSubject').text(item.subject);
-        //$('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
-        //$('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
-        //$('#body').html(item.body);
+        $('#optionalAttendees').html(buildEmailAddressesString(item.optionalAttendees));
+        $('#requiredAttendees').html(buildEmailAddressesString(item.requiredAttendees));
+        $('#body').html(item.body);
 
         $('#submit').click(function (ev) {
             var button = $(this);
@@ -148,9 +152,9 @@
                         jsonData = JSON.parse(data);
                     }
                     catch (ex) {
-                        // showNotification("Необходима авторизация в confluence, подтвердить переход?",
-                        //     '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
-                        //     '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
+                        showNotification("Необходима авторизация в confluence, подтвердить переход?",
+                            '<button onclick="auth()" class="ms-Button ms-Button--primary ms-sm6"><span class="ms-Button-label">Перейти</span></button>' +
+                            '<button onclick="hideNotification()" class="ms-Button ms-Button--primary ms-sm5"><span class="ms-Button-label">Отмена</span></button>');
 
                         button.prop('disabled', false);
                         return;
@@ -169,16 +173,18 @@
                         },
                         error: function (ctx, state, message) {
                             button.prop('disabled', false);
-                            // showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                            showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
                         }
                     });
                 },
                 error: function (ctx, state, message) {
                     button.prop('disabled', false);
-                    // showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
+                    showNotification('Ошибка создания МОМ встречи', state + ': ' + message);
                 }
             });
         });
+
+        document.getElementById("logger").innerText = "end filldata";
     }
 
     // Вспомогательная функция для отображения уведомлений
@@ -203,5 +209,4 @@
     window.hideNotification = function () {
         messageBanner.hideBanner();
     }
-
 })();

@@ -21,6 +21,7 @@
   <!-- Домены, которые будут разрешены при навигации. Например, если использовать ShowTaskpane, а затем указать ссылку "href", навигация будет разрешена только для домена, находящегося в списке. -->
   <AppDomains>
     <AppDomain>https://confluence.beeline.kz</AppDomain>
+    <AppDomain>https://alexkor.github.io</AppDomain>
   </AppDomains>
   <!--Конец основных настроек. -->
 
