@@ -101,10 +101,12 @@
     }
 
     function waitUntilDataRetrive() {
+        showNotification('wait start');
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
         else {
+            showNotification('wait end');
             fillData();
         }
     }
