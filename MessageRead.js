@@ -60,7 +60,6 @@
     // свойства конкретного сообщения.
     function loadProps() {
         var mailItem = Office.context.mailbox.item;
-        showNotification('Office.context.mailbox.item');
         window.item = {};
         if (!mailItem.itemClass) {
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
@@ -98,8 +97,8 @@
             $('#itemId').text(item.itemId);
             $('#itemType').text(item.itemType);
         }
-        waitUntilDataRetrive();
         showNotification('load data end');
+        waitUntilDataRetrive();
     }
 
     function waitUntilDataRetrive() {
