@@ -62,6 +62,7 @@
         var mailItem = Office.context.mailbox.item;
         window.item = {};
         if (!mailItem.itemClass) {
+            showNotification('load data if');
             Office.context.mailbox.item.organizer.getAsync(function (asyncResult) {
                 item.organizer = asyncResult.value;
             });
@@ -90,6 +91,7 @@
             //item.body = mailItem.body;
         }
         else {
+            showNotification('load data else');
             item = mailItem;
             $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
             $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
@@ -97,12 +99,10 @@
             $('#itemId').text(item.itemId);
             $('#itemType').text(item.itemType);
         }
-        showNotification('load data end');
         waitUntilDataRetrive();
     }
 
     function waitUntilDataRetrive() {
-        showNotification('wait start');
         if (!item.start || !item.end || !item.subject) {
             setTimeout(waitUntilDataRetrive, 200);
         }
